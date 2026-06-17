@@ -199,6 +199,11 @@ final class UploadController extends Controller
 
                 break;
 
+            case 'binance':
+                Log::debug('No extra steps for Binance.');
+
+                break;
+
             case 'lunchflow':
                 Log::debug('No extra steps for Lunch Flow.');
 

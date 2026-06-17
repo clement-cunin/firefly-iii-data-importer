@@ -38,6 +38,10 @@ Route::post('/configure-import/{identifier}', ['uses' => 'Import\ConfigurationCo
 Route::get('/download-import-configuration/{identifier}', ['uses' => 'Import\DownloadController@download', 'as' => 'configure-import.download']);
 Route::post('/check-duplicate-account/{identifier}', ['uses' => 'Import\DuplicateCheckController@checkDuplicate', 'as' => 'configure-import.check-duplicate']);
 
+// Binance: symbol selection step before conversion
+Route::get('/binance-connect/{identifier}', ['uses' => 'Import\Binance\ConnectController@index', 'as' => 'binance-connect.index']);
+Route::post('/binance-connect/{identifier}', ['uses' => 'Import\Binance\ConnectController@postIndex', 'as' => 'binance-connect.post']);
+
 // for GoCardless / Nordigen we have another step if you have no requisitions.
 // 1. Select a bank
 // 2. Redirect to Nordigen.

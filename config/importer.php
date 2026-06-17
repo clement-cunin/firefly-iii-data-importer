@@ -89,6 +89,13 @@ return [
             'explanation'               => '',
             'supports_new_accounts'     => true,
         ],
+        'binance'   => [
+            'title'                     => 'Binance',
+            'enabled'                   => true,
+            'conversion_before_mapping' => true,
+            'explanation'               => 'Import spot trades from Binance',
+            'supports_new_accounts'     => false,
+        ],
         'simplefin' => [
             'title'                     => 'SimpleFIN',
             'enabled'                   => true,

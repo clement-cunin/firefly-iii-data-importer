@@ -95,6 +95,9 @@ final class Configuration
 
     private string $lunchFlowApiKey       = '';
 
+    // binance configuration
+    private array $binanceSymbols         = [];
+
     // enable banking configuration
     private string $enableBankingCountry  = '';
     private string $enableBankingBank     = '';
@@ -152,6 +155,9 @@ final class Configuration
 
         // lunch flow configuration
         $this->lunchFlowApiKey             = '';
+
+        // binance configuration
+        $this->binanceSymbols              = [];
 
         // enable banking configuration
         $this->enableBankingCountry        = '';
@@ -262,6 +268,9 @@ final class Configuration
 
         // lunch flow configuration
         $object->lunchFlowApiKey             = $data['lunch_flow_api_key'] ?? '';
+
+        // binance configuration
+        $object->binanceSymbols              = $data['binance_symbols'] ?? [];
 
         // settings for spectre + nordigen (are not in v1 anyway)
         $object->mapAllData                  = $data['map_all_data'] ?? false;
@@ -416,6 +425,9 @@ final class Configuration
         // lunch flow configuration
         $object->lunchFlowApiKey             = $array['lunch_flow_api_key'] ?? '';
 
+        // binance configuration
+        $object->binanceSymbols              = $array['binance_symbols'] ?? [];
+
         // enable banking configuration
         $object->enableBankingCountry        = $array['enable_banking_country'] ?? '';
         $object->enableBankingBank           = $array['enable_banking_bank'] ?? '';
@@ -528,6 +540,9 @@ final class Configuration
 
         // lunch flow configuration
         $object->lunchFlowApiKey             = $array['lunch_flow_api_key'] ?? '';
+
+        // binance configuration
+        $object->binanceSymbols              = $array['binance_symbols'] ?? [];
 
         // enable banking:
         $object->enableBankingCountry        = $array['enable_banking_country'] ?? '';
@@ -1076,6 +1091,9 @@ final class Configuration
             'nordigen_max_days'            => $this->nordigenMaxDays,
             'lunch_flow_api_key'           => $this->lunchFlowApiKey,
 
+            // binance information:
+            'binance_symbols'              => $this->binanceSymbols,
+
             // enable banking information:
             'enable_banking_country'       => $this->enableBankingCountry,
             'enable_banking_bank'          => $this->enableBankingBank,
@@ -1207,6 +1225,16 @@ final class Configuration
     public function getLunchFlowApiKey(): string
     {
         return $this->lunchFlowApiKey;
+    }
+
+    public function getBinanceSymbols(): array
+    {
+        return $this->binanceSymbols;
+    }
+
+    public function setBinanceSymbols(array $binanceSymbols): void
+    {
+        $this->binanceSymbols = $binanceSymbols;
     }
 
     public function setDuplicateDetectionMethod(string $duplicateDetectionMethod): void

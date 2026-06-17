@@ -33,6 +33,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -56,7 +57,7 @@ final class ConversionController extends Controller
     /**
      * @throws ImporterErrorException
      */
-    public function index(string $identifier): Application|Factory|View
+    public function index(string $identifier): Application|Factory|View|RedirectResponse
     {
         Log::debug(sprintf('[%s] Now in %s', config('importer.version'), __METHOD__));
         $mainTitle           = 'Convert the data';
@@ -72,6 +73,13 @@ final class ConversionController extends Controller
         if ('file' !== $flow && $configuration->isMapAllData()) {
             Log::debug('Will send user to mapping next.');
             $nextUrl = route('data-mapping.index', [$identifier]);
+        }
+
+        // Binance requires symbols to be configured before conversion.
+        if ('binance' === $flow && 0 === count($configuration->getBinanceSymbols())) {
+            Log::debug('Binance flow has no symbols configured, redirecting to binance-connect.');
+
+            return redirect()->route('binance-connect.index', [$identifier]);
         }
 
         // switch based on flow:

@@ -170,7 +170,7 @@ final class ConfigurationController extends Controller
             'lunchflow' => ImportServiceAccount::convertLunchFlowArray($serviceAccounts),
             'sophtron'  => ImportServiceAccount::convertSophtronArray($serviceAccounts),
             'eb'        => ImportServiceAccount::convertEnableBankingArray($serviceAccounts),
-            'file'      => [],
+            'file', 'binance' => [],
             default     => throw new ImporterErrorException(sprintf('Cannot mergeAccountLists("%s")', $flow))
         };
 
@@ -223,6 +223,13 @@ final class ConfigurationController extends Controller
         // simplefin and others are now complete.
         $importJob->setState('configured_and_roles_defined');
         $this->repository->saveToDisk($importJob);
+
+        // Binance needs a symbol selection step before conversion.
+        if ('binance' === $importJob->getFlow()) {
+            Log::debug('Redirect to Binance symbol selection step.');
+
+            return route('binance-connect.index', [$importJob->identifier]);
+        }
 
         // can now redirect to conversion, because that will be the next step.
         Log::debug('Redirect to conversion because flow is not file.');

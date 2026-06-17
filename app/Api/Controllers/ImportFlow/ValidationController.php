@@ -25,6 +25,7 @@ declare(strict_types=1);
 namespace App\Api\Controllers\ImportFlow;
 
 use App\Api\Controllers\Controller;
+use App\Services\Binance\AuthenticationValidator as BinanceValidator;
 use App\Services\EnableBanking\AuthenticationValidator as EnableBankingValidator;
 use App\Services\Enums\AuthenticationStatus;
 use App\Services\LunchFlow\AuthenticationValidator as LunchFlowValidator;
@@ -44,9 +45,22 @@ final class ValidationController extends Controller
             'lunchflow'              => $this->validateLunchFlow(),
             'sophtron'               => $this->validateSophtron(),
             'eb'                     => $this->validateEnableBanking(),
+            'binance'                => $this->validateBinance(),
             'file'                   => response()->json(['result' => 'OK']),
             default                  => response()->json(['result' => 'NOK', 'message' => 'Unknown provider'])
         };
+    }
+
+    private function validateBinance(): JsonResponse
+    {
+        $validator = new BinanceValidator();
+        $result    = $validator->validate();
+
+        if (AuthenticationStatus::NODATA === $result) {
+            return response()->json(['result' => 'NODATA']);
+        }
+
+        return response()->json(['result' => 'OK']);
     }
 
     public function validateGoCardless(): JsonResponse

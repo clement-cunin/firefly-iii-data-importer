@@ -29,6 +29,7 @@ use App\Http\Controllers\Controller;
 use App\Services\EnableBanking\AuthenticationValidator as EnableBankingValidator;
 use App\Services\Enums\AuthenticationStatus;
 use App\Services\LunchFlow\AuthenticationValidator as LunchFlowValidator;
+use App\Services\Binance\AuthenticationValidator as BinanceValidator;
 use App\Services\Nordigen\AuthenticationValidator as NordigenValidator;
 use App\Services\Shared\Authentication\AuthenticationValidatorInterface;
 use App\Services\Sophtron\AuthenticationValidator as SophtronValidator;
@@ -103,6 +104,9 @@ final class AuthenticateController extends Controller
     {
         // need a switch here to validate all possible flows.
         switch ($flow) {
+            case 'binance':
+                return new BinanceValidator();
+
             case 'nordigen':
                 return new NordigenValidator();
 

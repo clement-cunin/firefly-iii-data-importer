@@ -206,6 +206,7 @@ final class ImportJobRepository
                 break;
 
             case 'sophtron':
+            case 'binance':
                 // get import job + configuration back:
                 $configuration = $importJob->getConfiguration();
 

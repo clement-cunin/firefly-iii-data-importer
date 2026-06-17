@@ -27,6 +27,7 @@ namespace App\Http\Controllers;
 use App\Services\EnableBanking\AuthenticationValidator as EnableBankingValidator;
 use App\Services\Enums\AuthenticationStatus;
 use App\Services\LunchFlow\AuthenticationValidator as LunchFlowValidator;
+use App\Services\Binance\AuthenticationValidator as BinanceValidator;
 use App\Services\Nordigen\AuthenticationValidator as NordigenValidator;
 use App\Services\SimpleFIN\AuthenticationValidator as SimpleFINValidator;
 use Illuminate\Http\JsonResponse;
@@ -53,6 +54,7 @@ final class ServiceController extends Controller
             'simplefin'              => $this->validateSimpleFIN(),
             'lunchflow'              => $this->validateLunchFlow(),
             'eb'                     => $this->validateEnableBanking(),
+            'binance'                => $this->validateBinance(),
             'file'                   => response()->json(['result' => 'OK']),
             default                  => response()->json(['result' => 'NOK', 'message' => 'Unknown provider'])
         };
@@ -109,6 +111,18 @@ final class ServiceController extends Controller
         }
         if (AuthenticationStatus::NODATA === $result) {
             // send user error:
+            return response()->json(['result' => 'NODATA']);
+        }
+
+        return response()->json(['result' => 'OK']);
+    }
+
+    public function validateBinance(): JsonResponse
+    {
+        $validator = new BinanceValidator();
+        $result    = $validator->validate();
+
+        if (AuthenticationStatus::NODATA === $result) {
             return response()->json(['result' => 'NODATA']);
         }
 

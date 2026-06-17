@@ -38,6 +38,14 @@ return [
     'placeholder_lunchflow_api_key' => 'Lunch Flow API key',
     'help_lunchflow_api_key'        => 'Enter your Lunch Flow API key',
 
+    // binance auth
+    'label_binance_api_key'         => 'Binance API Key',
+    'placeholder_binance_api_key'   => 'Your Binance read-only API key',
+    'help_binance_api_key'          => 'Generate a read-only API key in your Binance account settings',
+    'label_binance_api_secret'      => 'Binance API Secret',
+    'placeholder_binance_api_secret' => 'Your Binance API secret',
+    'help_binance_api_secret'       => 'The secret associated with your Binance API key',
+
     // sophtron auth
     'label_sophtron_user_id' => 'Sophtron User ID',
     'label_sophtron_access_key' => 'Sophtron Access Key',

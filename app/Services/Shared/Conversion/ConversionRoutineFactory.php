@@ -30,6 +30,7 @@ use App\Services\Camt\Conversion\RoutineManager as CamtRoutineManager;
 use App\Services\CSV\Conversion\RoutineManager as CSVRoutineManager;
 use App\Services\EnableBanking\Conversion\RoutineManager as EnableBankingRoutineManager;
 use App\Services\LunchFlow\Conversion\RoutineManager as LunchFlowRoutineManager;
+use App\Services\Binance\Conversion\RoutineManager as BinanceRoutineManager;
 use App\Services\Nordigen\Conversion\RoutineManager as NordigenRoutineManager;
 use App\Services\Shared\File\FileContentSherlock;
 use App\Services\SimpleFIN\Conversion\RoutineManager as SimpleFINRoutineManager;
@@ -75,6 +76,9 @@ final class ConversionRoutineFactory
         }
         if ('nordigen' === $flow) {
             return new NordigenRoutineManager($this->importJob);
+        }
+        if ('binance' === $flow) {
+            return new BinanceRoutineManager($this->importJob);
         }
         if ('simplefin' === $flow) {
             return new SimpleFINRoutineManager($this->importJob);
